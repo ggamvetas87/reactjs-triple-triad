@@ -1,73 +1,173 @@
-# React + TypeScript + Vite
+# 🃏 Triple Triad React Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A browser-based implementation of a **Triple Triad-style card game**, built with React.  
+The game features turn-based mechanics, card captures, dynamic scoring and artwork support.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🎮 Features
 
-## React Compiler
+- 🔄 Turn-based gameplay (Player 1 vs Player 2)
+- 🃏 Unique card system with stats (attack / defense / ownership)
+- 🧠 Capture mechanics inspired by Triple Triad rules
+- 👁️ Battle preview system (see outcomes before placing a card)
+- 🎨 Card artwork support (image-based cards)
+- 📊 Live score calculation
+- 🏁 Game over detection + winner modal
+- 🔁 Restart / replay functionality
+- ✨ Capture visual feedback (animations + highlights)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🧱 Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React (Hooks-based architecture)
+- TypeScript
+- Vite
+- CSS (custom styling)
+- Functional state management (no external state library)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 📁 Project Structure
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+/src
+|--- /components
+     |--- Board.tsx
+     |--- Card.tsx
+     |--- Hand.tsx
+     |--- ResultModal.tsx
+|--- /hooks
+     |--- useGame.ts
+|--- /utils
+     |--- gameHelpers.ts
+|--- /data
+     |--- cards.ts
+|--- /types
+     |--- game.ts
+|--- /public
+     |--- /cards
+          |--- ifirt.png
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🧠 Game Logic Overview
+
+### Board
+- 3x3 grid (9 cells)
+- Cards are placed on empty cells only
+
+### Turns
+- Player 1 starts
+- Players alternate turns after each valid move
+
+### Capture Rules
+After placing a card:
+- Adjacent enemy cards are compared
+- If your side is stronger → you capture the card
+- Board updates instantly
+
+### Win Condition
+Game ends when:
+- All board cells are filled OR
+- No valid moves remain
+
+Winner is determined by:
+- Total owned cards on the board
+
+---
+
+## 👁️ Battle Preview System
+
+Before placing a card:
+- Hover a cell
+- System simulates the move
+- Shows:
+  - potential captures
+  - board outcome preview
+  - visual highlights
+
+This helps players make strategic decisions before committing.
+
+---
+
+## 🎨 Card System
+
+Each card includes:
+
+```ts
+type CardType = {
+  id: string;
+  name: string;
+  attack: number;
+  defense: number;
+  owner: "p1" | "p2";
+  image: string;
+};
 ```
+
+Images are stored in:
+```bash
+/public/cards
+```
+
+## 🚀 Getting Started
+
+### 1. Install dependencies
+```bash
+yarn install
+```
+
+### 2. Run the project
+```bash
+yarn dev
+```
+
+### 3. Open in browser
+```bash
+http://localhost:5173/
+```
+
+---
+
+## 🔧 Possible Improvements
+- AI opponent (basic or advanced)
+- Ranked matchmaking system
+- Sound effects (card placement / capture)
+- Drag & drop card placement
+- Deck builder system
+- Online multiplayer (WebSocket / Socket.io)
+- Animated card battles
+
+---
+
+## 🧩 Future Ideas
+- Card rarity system
+- Elemental advantages (fire / water / etc.)
+- Campaign mode
+- Leaderboard system
+- Card evolution mechanics
+
+---
+
+## 📸 Preview
+
+(Pending screenshots or GIFs)
+
+---
+
+## 🧑‍💻 Author
+
+Built with React as a learning + experimental game project focused on:
+- state management patterns
+- game logic design
+- UI feedback systems
+
+---
+
+## 📄 License
+
+MIT
