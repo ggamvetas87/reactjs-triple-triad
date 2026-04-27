@@ -21,10 +21,37 @@ body {
   position: relative;
 }
 
+.app > h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app > h1 > img {
+  margin-right: 12px;
+}
+
+.app a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.app a:hover {
+  text-decoration: none;
+}
+
 .menu-buttons {
   position: absolute;
   top: 65px;
-  right: 35px;
+  right: 10px;
+  display: flex;
+  gap: 12px;
+}
+
+.instructions {
+  position: absolute;
+  top: 65px;
+  left: 10px;
   display: flex;
   gap: 12px;
 }
@@ -214,6 +241,10 @@ body {
 .modal-content h2 {
   margin-bottom: 16px;
   font-size: 2rem;
+}
+
+.modal-content a {
+  margin-left: 5px;
 }
 
 .card-image {

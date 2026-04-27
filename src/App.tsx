@@ -1,3 +1,4 @@
+import { useState } from "react"; 
 import { useGame } from "@/hooks/useGame";
 import Board from "@/components/Board";
 import Score from "@/components/Score";
@@ -23,10 +24,35 @@ export default function App() {
     toggleMusic
   } = useGame();
 
+  const [isInfoModalVisible, setInfoModalVisible] = useState(false);
+  
+  const introContent = (
+    <>
+      <img src="/img/card-back.png" alt="Triple Triad" 
+        style={{ width: "100%", maxWidth: "150px" }} />
+      <p>Triple Triad is a card game from 
+        <a href="https://en.wikipedia.org/wiki/Final_Fantasy_VIII" target="_blank">Final Fantasy VIII</a>. 
+      <br />This project implements only the game itself,
+      with only basic rule types and basic AI.</p>
+      <p>For a list of rules and gameplay, 
+        <a href="https://finalfantasy.fandom.com/wiki/Triple_Triad" 
+        target="_blank">ℹ️ instructions read here.</a></p>
+      <p>Click the button below to start the game.</p>
+    </>
+  );
+
   return (
     <div className="app">
-      <h1>Triple Triad</h1>
+      <h1>
+        <img src="/img/card-back.png" alt="Triple Triad" 
+        style={{ width: "100%", maxWidth: "50px" }} />
+        Triple Triad
+      </h1>
       
+      <div className="instructions">
+        <a onClick={() => setInfoModalVisible(true)}>ℹ️ Info</a>
+      </div>
+
       {/* Menu Buttons */}
       <div className="menu-buttons">
         <button onClick={() => restart()}>
@@ -37,7 +63,7 @@ export default function App() {
           {isMusicPlaying ? "⏸ Pause Music" : "▶️ Resume Music"}
         </button>
       </div>
-      
+
       {/* Score Board */}
       <Score score={score} turn={turn} />
 
@@ -53,19 +79,16 @@ export default function App() {
       )}
 
       {/* Start Game Modal */}
-      {!hasStarted && (
+      {(!hasStarted || isInfoModalVisible) && (
         <Modal
           title="Welcome to Triple Triad!"
-          content={<><p>Triple Triad is a card game from Final Fantasy VIII. 
-            <br />This project implements only the game itself,
-            with only basic rule types and basic AI.</p>
-            <p>Click the button below to start the game.</p></>}
-          buttonText="Start Game"
-          onClick={startGame}
+          content={introContent}
+          buttonText={!hasStarted ? "Start Game" : "Close"}
+          onClick={!hasStarted ? startGame : () => setInfoModalVisible(false)}
         />
       )}
 
-      {/* Player Deck */}
+      {/* Player Decks */}
       <PlayerCardDeck
         player="p1"
         cards={p1Deck}
