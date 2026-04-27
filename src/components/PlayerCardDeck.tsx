@@ -15,13 +15,14 @@ export default function PlayerCardDeck({
   onSelect,
   selectedCard
 }: PlayerCardDeckProps) {
+  const CARD_OFFSET = 100;
   let positionTop = 0;
 
   return (
     <div className={`hand hand-${player} ${!isActive ? "disabled" : ""}`}>
       {cards.map((card, index) => {
         if (index > 0) {
-          positionTop += 100; // Increment top position for each card after the first (for visual stacking)
+          positionTop += CARD_OFFSET; // Increment top position for each card after the first (for visual stacking)
         }
 
         return (
@@ -34,7 +35,14 @@ export default function PlayerCardDeck({
               backgroundImage: `url(${card.image})`
             }}
             title={card.name}
-          />
+          >
+            {/* Cursor */}
+            {selectedCard?.id === card.id && (
+              <img className={`card-cursor ${player}`} 
+                src="/img/cursor.png" 
+                alt="cursor" />
+            )}
+          </button>
         );
       })}
     </div>

@@ -197,6 +197,19 @@ body {
   transform: translateY(-24px) scale(1.03);
 }
 
+.card-cursor {
+  width: 100%;
+  max-width: 60px;
+  position: absolute;
+}
+.card-cursor.p1 {
+  right: -50px;
+  transform: scale(-1, 1);
+}
+.card-cursor.p2 {
+  left: -50px;
+}
+
 .cell.selectable {
   border-color: #fbbf24;
   box-shadow: 0 0 16px rgba(251, 191, 36, 0.18);
