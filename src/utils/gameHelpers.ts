@@ -1,5 +1,29 @@
 import type { CardType } from "@/types/game";
 
+let activeSounds: HTMLAudioElement[] = [];
+
+export const playSelectSound = (file: string, { volume = 0.5 } = {}) => {
+  const audio = new Audio(`/sounds/${file}`);
+  audio.volume = volume ?? 0.5;
+
+  activeSounds.push(audio);
+
+  void audio.play();
+
+  audio.onended = () => {
+    activeSounds = activeSounds.filter((a) => a !== audio);
+  };
+};
+
+export function stopAllSounds() {
+  activeSounds.forEach((audio) => {
+    audio.pause();
+    audio.currentTime = 0;
+  });
+
+  activeSounds = [];
+}
+
 export function getNeighbors(index: number) {
   const row = Math.floor(index / 3);
   const col = index % 3;
@@ -25,6 +49,7 @@ export function applyCaptures(board: (CardType | null)[], placedIndex: number, c
 
     if (card[n.side] > target[n.opposite]) {
       updated[n.index] = { ...target, owner: card.owner };
+      playSelectSound("card-turn.wav");
     }
   }
 

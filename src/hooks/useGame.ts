@@ -1,19 +1,25 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { player1Cards, player2Cards } from "@/data/cards";
 import type { CardType, Player } from "@/types/game";
-import { applyCaptures } from "@/utils/gameHelpers";
+import { applyCaptures, playSelectSound, stopAllSounds } from "@/utils/gameHelpers";
 
 export function useGame() {
   const [board, setBoard] = useState<(CardType | null)[]>(Array(9).fill(null));
+  const [hasStarted, setHasStarted] = useState(false);
   const [turn, setTurn] = useState<Player>("p1");
-  const [p1Hand, setP1Hand] = useState<CardType[]>(player1Cards);
-  const [p2Hand, setP2Hand] = useState<CardType[]>(player2Cards);
+  const [p1Deck, setP1Hand] = useState<CardType[]>(player1Cards);
+  const [p2Deck, setP2Hand] = useState<CardType[]>(player2Cards);
   const [selectedCard, setSelectedCard] = useState<CardType | null>(null);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
 
-  const currentHand = turn === "p1" ? p1Hand : p2Hand;
+  const currentHand = turn === "p1" ? p1Deck : p2Deck;
+
+  const bgMusicRef = useRef<HTMLAudioElement | null>(null);
 
   function selectCard(card: CardType) {
     if (card.owner !== turn) return;
+
+    playSelectSound("card-select.ogg");
     setSelectedCard(card);
   }
   
@@ -34,6 +40,7 @@ export function useGame() {
       setTurn("p1");
     }
 
+    playSelectSound("card-place2.wav");
     setSelectedCard(null);
   }
 
@@ -53,9 +60,9 @@ export function useGame() {
   const gameOver = useMemo(() => {
     return (
       board.every(Boolean) ||
-      (p1Hand.length === 0 && p2Hand.length === 0)
+      (p1Deck.length === 0 && p2Deck.length === 0)
     );
-  }, [board, p1Hand.length, p2Hand.length]);
+  }, [board, p1Deck.length, p2Deck.length]);
 
   const winner = useMemo(() => {
     if (!gameOver) return null;
@@ -64,26 +71,66 @@ export function useGame() {
     return "Draw";
   }, [gameOver, score]);
 
+  function startGame() {
+    setHasStarted(true);
+
+    if (bgMusicRef.current) {
+      void bgMusicRef.current.play();
+      setIsMusicPlaying(true);
+    }
+  }
+
   function restart() {
     setBoard(Array(9).fill(null));
     setTurn("p1");
     setP1Hand(player1Cards);
     setP2Hand(player2Cards);
     setSelectedCard(null);
+    stopAllSounds();
   }
+
+  function toggleMusic(refMusic?: React.RefObject<HTMLAudioElement>) {
+    const audio = refMusic?.current || bgMusicRef.current;
+    if (!audio) return;
+
+    if (audio.paused) {
+      void audio.play();
+      setIsMusicPlaying(true);
+    } else {
+      audio.pause();
+      setIsMusicPlaying(false);
+    }
+  }
+
+  useEffect(() => {
+    const audio = new Audio("/sounds/bg-music.mp3");
+    audio.loop = true;
+    audio.volume = 0.35;
+
+    bgMusicRef.current = audio;
+
+    return () => {
+      audio.pause();
+      audio.currentTime = 0;
+    };
+  }, []);
 
   return {
     board,
     turn,
     currentHand,
-    p1Hand,
-    p2Hand,
+    p1Deck,
+    p2Deck,
     selectedCard,
     score,
     gameOver,
     winner,
+    hasStarted,
+    isMusicPlaying,
     selectCard,
     placeCard,
-    restart
+    startGame,
+    restart,
+    toggleMusic
   };
 }

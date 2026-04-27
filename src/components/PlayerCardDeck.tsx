@@ -1,7 +1,6 @@
-import React from "react";
 import type { CardType, Player } from "@/types/game";
 
-type PlayerHandProps = {
+type PlayerCardDeckProps = {
   player: Player;
   cards: CardType[];
   isActive: boolean;
@@ -9,13 +8,13 @@ type PlayerHandProps = {
   onSelect: (card: CardType) => void;
 };
 
-export default function PlayerHand({
+export default function PlayerCardDeck({
   player,
   cards,
   isActive,
   onSelect,
   selectedCard
-}: PlayerHandProps) {
+}: PlayerCardDeckProps) {
   let positionTop = 0;
 
   return (

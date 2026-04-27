@@ -1,74 +1,71 @@
 import { useGame } from "@/hooks/useGame";
 import Board from "@/components/Board";
-import Card from "@/components/Card";
-import PlayerHand from "@/components/PlayerHand";
+import Score from "@/components/Score";
+import PlayerCardDeck from "@/components/PlayerCardDeck";
+import Modal from "@/components/Modal";
 
 export default function App() {
   const {
     board,
     turn,
-    currentHand,
-    p1Hand,
-    p2Hand,
+    p1Deck,
+    p2Deck,
     selectedCard,
     score,
     gameOver,
     winner,
+    hasStarted,
+    isMusicPlaying,
     selectCard,
     placeCard,
-    restart
+    startGame,
+    restart,
+    toggleMusic
   } = useGame();
 
   return (
     <div className="app">
       <h1>Triple Triad</h1>
+      <button onClick={() => toggleMusic()}>
+        {isMusicPlaying ? "⏸ Pause Music" : "▶️ Resume Music"}
+      </button>
+      
+      {/* Score Board */}
+      <Score score={score} turn={turn} />
 
-      <div className="score">
-        <span className="p1">{score.p1}</span>
-        <div>
-          <h2>Score</h2>
-          <span className={`turn ${turn}`}>{turn === "p1" ? "Player 1" : "Player 2"}</span>
-        </div>
-        <span className="p2">{score.p2}</span>
-      </div>
-
+      {/* Game Over Modal */}
       {gameOver && (
-        <div className="result-overlay">
-          <div className="result-modal">
-            <h2>{winner === "Player 1" ? "🏆 Winner!" : winner === "Player 2" ? "💀 Loser!" : "🤝 Draw!"}</h2>
-
-            <p>
-              Final Score: {score.p1} - {score.p2}
-            </p>
-
-            <button onClick={restart}>Play Again</button>
-          </div>
-        </div>
+        <Modal
+          title={winner === "Player 1" ? "🏆 Winner!" : winner === "Player 2" ? "💀 Loser!" : "🤝 Draw!"}
+          content={<p>Final Score: {score.p1} - {score.p2}</p>}
+          buttonText="Play Again"
+          onClick={restart}
+          soundEffect={winner === "Player 1" ? "ff8-victory-fanfare.ogg" : winner === "Player 2" ? "game-over.mp3" : "game-over.mp3"}
+        />
       )}
 
-      {/* {!gameOver && (
-        <div className="hand">
-          {currentHand.map(card => (
-            <Card 
-              key={card.id} 
-              card={card}
-              selected={selectedCard?.id === card.id}
-              onClick={() => selectCard(card)} />
-          ))}
-        </div>
-      )} */}
+      {/* Start Game Modal */}
+      {!hasStarted && (
+        <Modal
+          title="Welcome to Triple Triad!"
+          content={<p>Click the button below to start the game.</p>}
+          buttonText="Start Game"
+          onClick={startGame}
+        />
+      )}
 
-      <PlayerHand
+      {/* Player Deck */}
+      <PlayerCardDeck
         player="p1"
-        cards={p1Hand}
+        cards={p1Deck}
         isActive={turn === "p1"}
         onSelect={selectCard}
         selectedCard={selectedCard}
       />
 
-      <PlayerHand
+      <PlayerCardDeck
         player="p2"
-        cards={p2Hand}
+        cards={p2Deck}
         isActive={turn === "p2"}
         onSelect={selectCard}
         selectedCard={selectedCard}

@@ -18,6 +18,7 @@ body {
   margin: 0 auto;
   padding: 32px;
   text-align: center;
+  position: relative;
 }
 
 .score {
@@ -56,7 +57,7 @@ body {
   grid-template-columns: repeat(3, 140px);
   gap: 12px;
   justify-content: center;
-  margin: 32px auto;
+  margin: 0 auto;
 }
 
 .cell {
@@ -182,7 +183,7 @@ body {
   }
 }
 
-.result-overlay {
+.modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.72);
@@ -192,7 +193,7 @@ body {
   z-index: 100;
 }
 
-.result-modal {
+.modal-content {
   background: #111827;
   padding: 32px;
   border-radius: 20px;
@@ -202,7 +203,7 @@ body {
   border: 1px solid rgba(255,255,255,0.08);
 }
 
-.result-modal h2 {
+.modal-content h2 {
   margin-bottom: 16px;
   font-size: 2rem;
 }
@@ -231,7 +232,7 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   width: 160px;
-  height: 100%;
+  height: auto;
 }
 
 .hand-p1 {
