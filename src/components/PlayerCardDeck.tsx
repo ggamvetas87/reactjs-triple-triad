@@ -39,7 +39,7 @@ export default function PlayerCardDeck({
             {/* Cursor */}
             {selectedCard?.id === card.id && (
               <img className={`card-cursor ${player}`} 
-                src="/img/cursor.png" 
+                src="/assets/cursor.png" 
                 alt="cursor" />
             )}
           </button>
