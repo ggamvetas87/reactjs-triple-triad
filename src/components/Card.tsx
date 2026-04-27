@@ -55,7 +55,7 @@ export default function Card({
 
       <div className="middle">
         <span>{card.left}</span>
-        <div>
+        <div className="card-center">
           <div
             style={{
               width: 48,

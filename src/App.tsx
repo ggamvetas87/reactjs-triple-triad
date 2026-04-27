@@ -105,7 +105,7 @@ export default function App() {
         selectedCard={selectedCard}
       />
 
-      <p>Selected: {selectedCard?.name ?? "None"}</p>
+      <p>Selected: {selectedCard ? `${selectedCard.name} - Level ${selectedCard.level}` : "None"}</p>
 
       <Board 
         board={board}

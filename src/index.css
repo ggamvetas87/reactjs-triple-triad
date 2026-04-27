@@ -162,6 +162,10 @@ body {
   align-items: center;
 }
 
+.card-center strong {
+  word-break: break-word;
+}
+
 .card-top,
 .card-bottom,
 .card-left,

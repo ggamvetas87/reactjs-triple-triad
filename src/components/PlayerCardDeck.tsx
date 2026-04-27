@@ -34,7 +34,7 @@ export default function PlayerCardDeck({
               top: `${positionTop}px`,
               backgroundImage: `url(${card.image})`
             }}
-            title={card.name}
+            title={`${card.name} - Level ${card.level}`}
           >
             {/* Cursor */}
             {selectedCard?.id === card.id && (
