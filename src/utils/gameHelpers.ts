@@ -1,4 +1,4 @@
-import type { CardType } from "@/types/game";
+import type { Player, CardType, RawCard } from "@/types/game";
 
 let activeSounds: HTMLAudioElement[] = [];
 let backgroundMusic: HTMLAudioElement | null = null;
@@ -108,4 +108,57 @@ export function applyCaptures(board: (CardType | null)[], placedIndex: number, c
   }
 
   return updated;
+}
+
+export function shuffleDeck<T>(deck: T[]): T[] {
+  const shuffled = [...deck];
+
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  return shuffled;
+}
+
+export function sanitizeCardName(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/,/g, "")
+    .replace(/\s+/g, "-");
+}
+
+export function formatCard(card: RawCard): CardType {
+  const [top, left, right, bottom] = card.ranks;
+
+  return {
+    id: card.id,
+    name: card.name,
+    top,
+    right,
+    bottom,
+    left,
+    image: `/cards/${sanitizeCardName(card.name)}.png`,
+    element: card.element?.toLowerCase() ?? "neutral",
+    level: card.level
+  };
+}
+
+export function assignOwner(cards: RawCard[], owner: Player): CardType[] {
+  return cards.map(card => ({
+    ...formatCard(card),
+    owner,
+    id: `${card.id}-${sanitizeCardName(card.name)}-${owner}`
+  }));
+}
+
+export function dealHands(deck: RawCard[]) {
+  const shuffled = shuffleDeck(deck);
+
+  return {
+    player1Cards: assignOwner(shuffled.slice(0, 5), "p1"),
+    player2Cards: assignOwner(shuffled.slice(5, 10), "p2"),
+    computerCards: assignOwner(shuffled.slice(10, 15), "computer")
+  };
 }

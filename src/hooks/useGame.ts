@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { player1Cards, player2Cards } from "@/data/cards";
-import type { CardType, Player } from "@/types/game";
-import { 
+import type { RawCard, CardType, Player } from "@/types/game";
+import { deck as cardsDeck } from "@/data/allCards";
+import {
+  dealHands,
   applyCaptures,
   playSound,
   stopAllSounds,
@@ -12,6 +13,7 @@ export function useGame() {
   const [board, setBoard] = useState<(CardType | null)[]>(Array(9).fill(null));
   const [hasStarted, setHasStarted] = useState(false);
   const [turn, setTurn] = useState<Player>("p1");
+  const { player1Cards, player2Cards } = dealHands(cardsDeck as RawCard[]);
   const [p1Deck, setP1Deck] = useState<CardType[]>(player1Cards);
   const [p2Deck, setP2Deck] = useState<CardType[]>(player2Cards);
   const [selectedCard, setSelectedCard] = useState<CardType | null>(null);
