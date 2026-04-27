@@ -26,9 +26,17 @@ export default function App() {
   return (
     <div className="app">
       <h1>Triple Triad</h1>
-      <button onClick={() => toggleMusic()}>
-        {isMusicPlaying ? "⏸ Pause Music" : "▶️ Resume Music"}
-      </button>
+      
+      {/* Menu Buttons */}
+      <div className="menu-buttons">
+        <button onClick={() => restart()}>
+          New Game
+        </button>
+
+        <button onClick={() => toggleMusic()}>
+          {isMusicPlaying ? "⏸ Pause Music" : "▶️ Resume Music"}
+        </button>
+      </div>
       
       {/* Score Board */}
       <Score score={score} turn={turn} />
@@ -48,7 +56,10 @@ export default function App() {
       {!hasStarted && (
         <Modal
           title="Welcome to Triple Triad!"
-          content={<p>Click the button below to start the game.</p>}
+          content={<><p>Triple Triad is a card game from Final Fantasy VIII. 
+            <br />This project implements only the game itself,
+            with only basic rule types and basic AI.</p>
+            <p>Click the button below to start the game.</p></>}
           buttonText="Start Game"
           onClick={startGame}
         />

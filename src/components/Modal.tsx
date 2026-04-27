@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import type React from "react";
-import { playSelectSound } from "@/utils/gameHelpers";
+import { playSound } from "@/utils/gameHelpers";
 
 type ModalProps = {
   title: string;
@@ -14,7 +14,7 @@ export default function Modal({ title, content, buttonText, onClick, soundEffect
   
   useEffect(() => {
     if (soundEffect) {
-      playSelectSound(soundEffect);
+      playSound(soundEffect);
     }
   }, [soundEffect]);
   
