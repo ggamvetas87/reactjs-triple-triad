@@ -2,7 +2,7 @@ import type { CardType } from "@/types/game";
 
 export const player1Cards: CardType[] = [
   {
-    id: 1,
+    id: 10,
     name: "Ifrit",
     top: 9,
     right: 6,
@@ -14,7 +14,7 @@ export const player1Cards: CardType[] = [
     level: 9
   },
   {
-    id: 2,
+    id: 11,
     name: "Shiva",
     top: 6,
     right: 7,
@@ -26,7 +26,7 @@ export const player1Cards: CardType[] = [
     level: 9
   },
   {
-    id: 3,
+    id: 12,
     name: "Quezacotl",
     top: 2,
     right: 9,
@@ -37,11 +37,33 @@ export const player1Cards: CardType[] = [
     element: "thunder",
     level: 9
   },
+  {
+    id: 13,
+    name: "Zell",
+    top: 8,
+    right: 5,
+    bottom: 10,
+    left: 6,
+    owner: "p1",
+    image: "/cards/zell.png",
+    level: 10
+  },{
+    id: 14,
+    name: "Doomtrain",
+    top: 3,
+    right: 10,
+    bottom: 10,
+    left: 1,
+    owner: "p1",
+    image: "/cards/doomtrain.png",
+    element: "poison",
+    level: 9
+  }
 ];
 
 export const player2Cards: CardType[] = [
   {
-    id: 4,
+    id: 20,
     name: "Bahamut",
     top: 10,
     right: 8,
@@ -53,7 +75,7 @@ export const player2Cards: CardType[] = [
     level: 9
   },
   {
-    id: 5,
+    id: 21,
     name: "Odin",
     top: 8,
     right: 10,
@@ -65,7 +87,7 @@ export const player2Cards: CardType[] = [
     level: 9
   },
   {
-    id: 6,
+    id: 22,
     name: "Diablos",
     top: 5,
     right: 10,
@@ -76,4 +98,27 @@ export const player2Cards: CardType[] = [
     element: null,
     level: 9
   },
+  {
+    id: 23,
+    name: "Laguna",
+    top: 5,
+    right: 10,
+    bottom: 3,
+    left: 9,
+    owner: "p2",
+    image: "/cards/laguna.png",
+    level: 10
+  },
+  {
+    id: 24,
+    name: "Alexander",
+    top: 9,
+    right: 10,
+    bottom: 4,
+    left: 2,
+    owner: "p2",
+    image: "/cards/alexander.png",
+    element: "holy",
+    level: 9
+  }
 ];

@@ -23,8 +23,14 @@ export default function App() {
     <div className="app">
       <h1>Triple Triad</h1>
 
-      <h2>Turn: {turn}</h2>
-      <h3>Score P1: {score.p1} | P2: {score.p2}</h3>
+      <div className="score">
+        <span className="p1">{score.p1}</span>
+        <div>
+          <h2>Score</h2>
+          <span className={`turn ${turn}`}>{turn === "p1" ? "Player 1" : "Player 2"}</span>
+        </div>
+        <span className="p2">{score.p2}</span>
+      </div>
 
       {gameOver && (
         <div className="result-overlay">

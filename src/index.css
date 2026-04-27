@@ -20,6 +20,37 @@ body {
   text-align: center;
 }
 
+.score {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.score h2 {
+  color: #fbbf24;
+}
+.score span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+  filter: drop-shadow(0 0 4px rgba(255,255,255,0.25));
+  font-size: 2.4rem;
+  margin: 0;
+}
+.score span.p1 {
+  color: #3387e1;
+}
+.score span.p2 {
+  color: #f87171;
+}
+.score .turn {
+  font-size: 1.1rem;
+}
+
 .board {
   display: grid;
   grid-template-columns: repeat(3, 140px);
