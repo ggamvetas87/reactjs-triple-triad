@@ -1,12 +1,15 @@
 import { useGame } from "@/hooks/useGame";
 import Board from "@/components/Board";
 import Card from "@/components/Card";
+import PlayerHand from "@/components/PlayerHand";
 
 export default function App() {
   const {
     board,
     turn,
     currentHand,
+    p1Hand,
+    p2Hand,
     selectedCard,
     score,
     gameOver,
@@ -37,7 +40,7 @@ export default function App() {
         </div>
       )}
 
-      {!gameOver && (
+      {/* {!gameOver && (
         <div className="hand">
           {currentHand.map(card => (
             <Card 
@@ -47,7 +50,23 @@ export default function App() {
               onClick={() => selectCard(card)} />
           ))}
         </div>
-      )}
+      )} */}
+
+      <PlayerHand
+        player="p1"
+        cards={p1Hand}
+        isActive={turn === "p1"}
+        onSelect={selectCard}
+        selectedCard={selectedCard}
+      />
+
+      <PlayerHand
+        player="p2"
+        cards={p2Hand}
+        isActive={turn === "p2"}
+        onSelect={selectCard}
+        selectedCard={selectedCard}
+      />
 
       <p>Selected: {selectedCard?.name ?? "None"}</p>
 

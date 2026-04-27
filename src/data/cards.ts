@@ -9,7 +9,9 @@ export const player1Cards: CardType[] = [
     bottom: 2,
     left: 8,
     owner: "p1",
-    image: "/cards/ifrit.png"
+    image: "/cards/ifrit.png",
+    element: "fire",
+    level: 9
   },
   {
     id: 2,
@@ -19,7 +21,9 @@ export const player1Cards: CardType[] = [
     bottom: 4,
     left: 9,
     owner: "p1",
-    image: "/cards/shiva.png"
+    image: "/cards/shiva.png",
+    element: "ice",
+    level: 9
   },
   {
     id: 3,
@@ -29,7 +33,9 @@ export const player1Cards: CardType[] = [
     bottom: 9,
     left: 4,
     owner: "p1",
-    image: "/cards/quezacotl.png"
+    image: "/cards/quezacotl.png",
+    element: "thunder",
+    level: 9
   },
 ];
 
@@ -42,7 +48,9 @@ export const player2Cards: CardType[] = [
     bottom: 2,
     left: 6,
     owner: "p2",
-    image: "/cards/bahamut.png"
+    image: "/cards/bahamut.png",
+    element: null,
+    level: 9
   },
   {
     id: 5,
@@ -52,7 +60,9 @@ export const player2Cards: CardType[] = [
     bottom: 3,
     left: 5,
     owner: "p2",
-    image: "/cards/odin.png"
+    image: "/cards/odin.png",
+    element: null,
+    level: 9
   },
   {
     id: 6,
@@ -62,6 +72,8 @@ export const player2Cards: CardType[] = [
     bottom: 8,
     left: 3,
     owner: "p2",
-    image: "/cards/diablos.png"
+    image: "/cards/diablos.png",
+    element: null,
+    level: 9
   },
 ];

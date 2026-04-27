@@ -9,6 +9,8 @@ export type CardType = {
   left: number;
   owner: Player;
   image: string;
+  element?: string | null;
+  level: number;
 };
 
 export type BoardCell = CardType | null;

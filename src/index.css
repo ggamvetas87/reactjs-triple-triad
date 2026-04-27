@@ -20,14 +20,6 @@ body {
   text-align: center;
 }
 
-.hand {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin: 24px 0;
-  flex-wrap: wrap;
-}
-
 .board {
   display: grid;
   grid-template-columns: repeat(3, 140px);
@@ -87,6 +79,15 @@ body {
   box-shadow: 0 0 12px rgba(239, 68, 68, 0.25);
 }
 
+.card.playerhand {
+  width: 150px;
+  height: 192px;
+  position: absolute;
+  top: 0;
+  background-size: cover;
+  border-radius: 0px;
+}
+
 .middle {
   display: grid;
   grid-template-columns: 24px 1fr 24px;
@@ -125,7 +126,7 @@ body {
     0 0 0 2px rgba(251, 191, 36, 0.35),
     0 0 18px rgba(251, 191, 36, 0.55),
     0 8px 20px rgba(0, 0, 0, 0.35);
-  transform: translateY(-4px) scale(1.03);
+  transform: translateY(-24px) scale(1.03);
 }
 
 .cell.selectable {
@@ -177,7 +178,7 @@ body {
 
 .card-image {
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: cover;
   display: block;
 }
@@ -188,4 +189,45 @@ body {
 
 .card[data-owner="p2"] {
   border: 2px solid #f87171;
+}
+
+.hand {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  margin: 24px 0;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 160px;
+  height: 100%;
+}
+
+.hand-p1 {
+  position: absolute;
+  left: 0;
+}
+
+.hand-p2 {
+  position: absolute;
+  right: 0;
+}
+
+.hand.disabled {
+  opacity: 0.4;
+  filter: grayscale(1);
+  pointer-events: none;
+}
+
+.turn-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  font-size: 18px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
 }

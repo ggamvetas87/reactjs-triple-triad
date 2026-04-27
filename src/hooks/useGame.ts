@@ -76,6 +76,8 @@ export function useGame() {
     board,
     turn,
     currentHand,
+    p1Hand,
+    p2Hand,
     selectedCard,
     score,
     gameOver,
