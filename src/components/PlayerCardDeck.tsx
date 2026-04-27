@@ -22,7 +22,7 @@ export default function PlayerCardDeck({
     <div className={`hand hand-${player} ${!isActive ? "disabled" : ""}`}>
       {cards.map((card, index) => {
         if (index > 0) {
-          positionTop += CARD_OFFSET; // Increment top position for each card after the first (for visual stacking)
+          positionTop = index * CARD_OFFSET; // Increment top position for each card after the first (for visual stacking)
         }
 
         return (
