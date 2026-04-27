@@ -110,6 +110,9 @@ export function applyCaptures(board: (CardType | null)[], placedIndex: number, c
   return updated;
 }
 
+// Fisher-Yates shuffle
+// https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+// Start from the end of the array and repeatedly swap each item with a random item before it (or itself)
 export function shuffleDeck<T>(deck: T[]): T[] {
   const shuffled = [...deck];
 
