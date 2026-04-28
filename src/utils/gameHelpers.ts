@@ -165,3 +165,40 @@ export function dealHands(deck: RawCard[]) {
     computerCards: assignOwner(shuffled.slice(10, 15), "computer")
   };
 }
+
+export function getBestComputerMove(
+  board: (CardType | null)[],
+  computerDeck: CardType[]
+) {
+  const emptyIndexes = board
+    .map((cell, index) => (cell === null ? index : null))
+    .filter((index): index is number => index !== null);
+
+  let bestMove: { card: CardType; index: number; score: number } | null = null;
+
+  for (const card of computerDeck) {
+    for (const index of emptyIndexes) {
+      const simulatedBoard = [...board];
+      simulatedBoard[index] = card;
+
+      const capturedBoard = applyCaptures(simulatedBoard, index, card);
+
+      const captures = capturedBoard.filter(
+        (c, i) =>
+          i !== index &&
+          c?.owner === "computer" &&
+          board[i]?.owner !== "computer"
+      ).length;
+
+      if (!bestMove || captures > bestMove.score) {
+        bestMove = {
+          card,
+          index,
+          score: captures,
+        };
+      }
+    }
+  }
+
+  return bestMove;
+}

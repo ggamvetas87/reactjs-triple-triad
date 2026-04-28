@@ -1,25 +1,30 @@
 import { useEffect, useMemo, useState } from "react";
-import type { RawCard, CardType, Player } from "@/types/game";
+import type { GameMode, RawCard, CardType, Player } from "@/types/game";
 import { deck as cardsDeck } from "@/data/allCards";
 import {
   dealHands,
   applyCaptures,
   playSound,
   stopAllSounds,
-  toggleBackgroundMusic
+  toggleBackgroundMusic,
+  getBestComputerMove
 } from "@/utils/gameHelpers";
 
 export function useGame() {
+  const { player1Cards, player2Cards, computerCards } = dealHands(cardsDeck as RawCard[]);
+
+  const [gameMode, setGameMode] = useState<GameMode>("single");
   const [board, setBoard] = useState<(CardType | null)[]>(Array(9).fill(null));
   const [hasStarted, setHasStarted] = useState(false);
   const [turn, setTurn] = useState<Player>("p1");
-  const { player1Cards, player2Cards } = dealHands(cardsDeck as RawCard[]);
   const [p1Deck, setP1Deck] = useState<CardType[]>(player1Cards);
-  const [p2Deck, setP2Deck] = useState<CardType[]>(player2Cards);
+  const [opponentDeck, setOpponentDeck] = useState<CardType[]>(
+    gameMode === "single" ? computerCards : player2Cards
+  );
   const [selectedCard, setSelectedCard] = useState<CardType | null>(null);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
 
-  const currentDeck = turn === "p1" ? p1Deck : p2Deck;
+  const currentDeck = turn === "p1" ? p1Deck : opponentDeck;
 
   function selectCard(card: CardType) {
     if (card.owner !== turn) return;
@@ -37,11 +42,14 @@ export function useGame() {
 
     setBoard(newBoard);
 
+    // Remove card from player's / bot's hand and switch turn
     if (turn === "p1") {
       setP1Deck(prev => prev.filter(c => c.id !== selectedCard.id));
-      setTurn("p2");
+      setTurn(gameMode === "single" ? "computer" : "p2");
     } else {
-      setP2Deck(prev => prev.filter(c => c.id !== selectedCard.id));
+      setOpponentDeck(prev =>
+        prev.filter(c => c.id !== selectedCard.id)
+      );
       setTurn("p1");
     }
 
@@ -65,9 +73,9 @@ export function useGame() {
   const gameOver = useMemo(() => {
     return (
       board.every(Boolean) ||
-      (p1Deck.length === 0 && p2Deck.length === 0)
+      (p1Deck.length === 0 && opponentDeck.length === 0)
     );
-  }, [board, p1Deck.length, p2Deck.length]);
+  }, [board, p1Deck.length, opponentDeck.length]);
 
   const winner = useMemo(() => {
     if (!gameOver) return null;
@@ -82,21 +90,31 @@ export function useGame() {
     isBackground: true,
   });
 
-  function startGame() {
+  function startGame(mode: GameMode) {
+    setGameMode(mode);
+
+  const { player1Cards, player2Cards, computerCards } =
+    dealHands(cardsDeck as RawCard[]);
+
+    setBoard(Array(9).fill(null));
+    setTurn("p1");
+    setP1Deck(player1Cards);
+
+    setOpponentDeck(
+      mode === "multiplayer"
+        ? player2Cards
+        : computerCards
+    );
+
+    setSelectedCard(null);
     setHasStarted(true);
+
     startBgMusic();
     setIsMusicPlaying(true);
   }
 
-  function restart() {
-    setBoard(Array(9).fill(null));
-    setTurn("p1");
-    setP1Deck(player1Cards);
-    setP2Deck(player2Cards);
-    setSelectedCard(null);
-    
-    stopAllSounds();
-    startBgMusic();
+  function restart(mode: GameMode = gameMode) {
+    startGame(mode);
   }
 
   function toggleMusic() {
@@ -111,22 +129,48 @@ export function useGame() {
     };
   }, []);
 
+  useEffect(() => {
+    if (gameMode !== "single" || turn !== "computer" || gameOver) return;
+
+    const timer = setTimeout(() => {
+      const move = getBestComputerMove(board, computerCards);
+
+      if (!move) return;
+
+      let newBoard = [...board];
+      newBoard[move.index] = move.card;
+      newBoard = applyCaptures(newBoard, move.index, move.card);
+
+      setBoard(newBoard);
+      setOpponentDeck((prev) =>
+        prev.filter((c) => c.id !== move.card.id)
+      );
+
+      playSound("card-place2.wav");
+      setTurn("p1");
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, [turn, board, opponentDeck, gameOver, computerCards, gameMode]);
+
   return {
     board,
     turn,
     currentDeck,
     p1Deck,
-    p2Deck,
+    opponentDeck,
     selectedCard,
     score,
     gameOver,
     winner,
     hasStarted,
     isMusicPlaying,
+    gameMode,
     selectCard,
     placeCard,
     startGame,
     restart,
-    toggleMusic
+    toggleMusic,
+    setGameMode
   };
 }

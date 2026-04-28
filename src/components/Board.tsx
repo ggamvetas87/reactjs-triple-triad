@@ -25,17 +25,17 @@ export default function Board({
             onClick={() => onPlace(i)}
           >
             <AnimatePresence mode="wait">
-                {cell && (
-                    <motion.div
-                        key={cell.id}
-                        initial={{ scale: 0.7, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.8, opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                    >
-                        <Card card={cell} />
-                    </motion.div>
-                )}
+              {cell && (
+                <motion.div
+                  key={cell.id}
+                  initial={{ scale: 0.7, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.8, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Card card={cell} />
+                </motion.div>
+              )}
             </AnimatePresence>
           </div>
         );

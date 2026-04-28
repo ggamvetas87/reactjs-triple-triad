@@ -10,7 +10,7 @@ export default function App() {
     board,
     turn,
     p1Deck,
-    p2Deck,
+    opponentDeck,
     selectedCard,
     score,
     gameOver,
@@ -21,7 +21,8 @@ export default function App() {
     placeCard,
     startGame,
     restart,
-    toggleMusic
+    toggleMusic,
+    setGameMode
   } = useGame();
 
   const [isInfoModalVisible, setInfoModalVisible] = useState(false);
@@ -38,6 +39,8 @@ export default function App() {
         <a href="https://finalfantasy.fandom.com/wiki/Triple_Triad" 
         target="_blank">ℹ️ instructions read here.</a></p>
       <p>Click the button below to start the game.</p>
+      <p><button onClick={!hasStarted ? () => startGame("single") : () => setInfoModalVisible(false)}>{!hasStarted ? "Start Game (1vCPU)" : "Close"}</button></p>
+      {!hasStarted && <p><button onClick={() => startGame("multiplayer")}>Start Game (1v1)</button></p>}
     </>
   );
 
@@ -53,10 +56,14 @@ export default function App() {
         <a onClick={() => setInfoModalVisible(true)}>ℹ️ Info</a>
       </div>
 
-      {/* Menu Buttons */}
+      {/* Menu Buttons */}  
       <div className="menu-buttons">
-        <button onClick={() => restart()}>
-          New Game
+        <button onClick={() => restart("multiplayer")}>
+          New Game (1v1)
+        </button>
+
+        <button onClick={() => restart("single")}>
+          New Game (1vCPU)
         </button>
 
         <button onClick={() => toggleMusic()}>
@@ -83,8 +90,6 @@ export default function App() {
         <Modal
           title="Welcome to Triple Triad!"
           content={introContent}
-          buttonText={!hasStarted ? "Start Game" : "Close"}
-          onClick={!hasStarted ? startGame : () => setInfoModalVisible(false)}
         />
       )}
 
@@ -98,9 +103,9 @@ export default function App() {
       />
 
       <PlayerCardDeck
-        player="p2"
-        cards={p2Deck}
-        isActive={turn === "p2"}
+        player={turn === "p2" ? "p2" : "computer"}
+        cards={opponentDeck}
+        isActive={turn === "p2" || turn === "computer"}
         onSelect={selectCard}
         selectedCard={selectedCard}
       />

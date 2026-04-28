@@ -1,5 +1,7 @@
 export type Player = "p1" | "p2" | "computer";
 
+export type GameMode = "single" | "multiplayer";
+
 export type RawCard = {
   id: number;
   name: string;

@@ -4,7 +4,7 @@ type ScoreProps = {
 }
 
 export default function Score({ score, turn }: ScoreProps) {
-  let playerName = "computer";
+  let playerName = "Computer";
 
   if (turn === "p1") {
     playerName = "Player 1";

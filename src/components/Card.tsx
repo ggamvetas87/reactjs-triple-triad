@@ -18,38 +18,38 @@ export default function Card({
 
     useEffect(() => {
         if (previousOwner.current !== card.owner) {
-            setIsFlipped(true);
+          setIsFlipped(true);
 
-            const timer = setTimeout(() => {
-                setIsFlipped(false);
-                previousOwner.current = card.owner;
-            }, 450);
+          const timer = setTimeout(() => {
+            setIsFlipped(false);
+            previousOwner.current = card.owner;
+          }, 450);
 
-            return () => clearTimeout(timer);
+          return () => clearTimeout(timer);
         }
     }, [card.owner]);
   
   return (
     <motion.div
-        className={`card ${card.owner} ${selected ? "selected" : ""}`}
-        onClick={onClick}
-        whileHover={{ scale: 1.04, y: -2 }}
-        whileTap={{ scale: 0.97 }}
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{
-            opacity: 1,
-            scale: 1,
-            rotateY: isFlipped ? 180 : 0,
-        }}
-        transition={{
-            duration: 0.45,
-            type: "spring",
-            stiffness: 180,
-        }}
-        style={{
-            transformStyle: "preserve-3d",
-        }}
-        data-owner={card.owner}
+      className={`card ${card.owner} ${selected ? "selected" : ""}`}
+      onClick={onClick}
+      whileHover={{ scale: 1.04, y: -2 }}
+      whileTap={{ scale: 0.97 }}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{
+          opacity: 1,
+          scale: 1,
+          rotateY: isFlipped ? 180 : 0,
+      }}
+      transition={{
+          duration: 0.45,
+          type: "spring",
+          stiffness: 180,
+      }}
+      style={{
+          transformStyle: "preserve-3d",
+      }}
+      data-owner={card.owner}
     >
       <div>{card.top}</div>
 

@@ -81,7 +81,7 @@ body {
 .score span.p1 {
   color: #3387e1;
 }
-.score span.p2 {
+.score span.p2, .score span.computer {
   color: #f87171;
 }
 .score .turn {
@@ -142,7 +142,7 @@ body {
   box-shadow: 0 0 12px rgba(59, 130, 246, 0.25);
 }
 
-.card.p2 {
+.card.p2, .card.computer {
   background: linear-gradient(180deg, #dc2626, #1e293b);
   box-shadow: 0 0 12px rgba(239, 68, 68, 0.25);
 }
@@ -210,7 +210,7 @@ body {
   right: -50px;
   transform: scale(-1, 1);
 }
-.card-cursor.p2 {
+.card-cursor.p2, .card-cursor.computer {
   left: -50px;
 }
 
@@ -276,7 +276,7 @@ body {
   border: 2px solid #1d4ed8;
 }
 
-.card[data-owner="p2"] {
+.card[data-owner="p2"], .card[data-owner="computer"] {
   border: 2px solid #f87171;
 }
 
@@ -297,7 +297,7 @@ body {
   left: 0;
 }
 
-.hand-p2 {
+.hand-p2, .hand-computer {
   position: absolute;
   right: 0;
 }
