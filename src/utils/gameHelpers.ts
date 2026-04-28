@@ -1,4 +1,4 @@
-import type { Player, CardType, RawCard } from "@/types/game";
+import type { Player, CardSide, CardType, RawCard } from "@/types/game";
 
 let activeSounds: HTMLAudioElement[] = [];
 let backgroundMusic: HTMLAudioElement | null = null;
@@ -21,7 +21,7 @@ export const playSound = (
     backgroundMusic.currentTime = 0;
   }
 
-  const audio = new Audio(`/sounds/${file}`);
+  const audio = new Audio(`${import.meta.env.BASE_URL}/sounds/${file}`);
   audio.volume = volume;
   audio.loop = loop;
 
@@ -82,7 +82,7 @@ export function getNeighbors(index: number) {
   const row = Math.floor(index / 3);
   const col = index % 3;
 
-  const neighbors: { index: number; side: keyof CardType; opposite: keyof CardType }[] = [];
+  const neighbors: { index: number; side: CardSide; opposite: CardSide }[] = [];
 
   if (row > 0) neighbors.push({ index: index - 3, side: "top", opposite: "bottom" });
   if (row < 2) neighbors.push({ index: index + 3, side: "bottom", opposite: "top" });
@@ -92,7 +92,11 @@ export function getNeighbors(index: number) {
   return neighbors;
 }
 
-export function applyCaptures(board: (CardType | null)[], placedIndex: number, card: CardType) {
+export function applyCaptures(
+  board: (CardType | null)[], 
+  placedIndex: number, 
+  card: CardType
+) {
   const updated = [...board];
   const neighbors = getNeighbors(placedIndex);
 
@@ -142,7 +146,7 @@ export function formatCard(card: RawCard): CardType {
     right,
     bottom,
     left,
-    image: `/cards/${sanitizeCardName(card.name)}.png`,
+    image: `${import.meta.env.BASE_URL}cards/${sanitizeCardName(card.name)}.png`,
     element: card.element?.toLowerCase() ?? "neutral",
     level: card.level
   };

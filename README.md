@@ -3,6 +3,9 @@
 A browser-based implementation of a **Triple Triad-style card game**, built with React.  
 The game features turn-based mechanics, card captures, dynamic scoring and artwork support.
 
+You can check the <a href="https://warriorpanda.com/triple-triad/" target="_blank">demo here</a>.
+Have fun! :)
+
 ---
 
 ## 🎮 Features

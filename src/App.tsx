@@ -29,7 +29,7 @@ export default function App() {
   
   const introContent = (
     <>
-      <img src="/assets/card-back.png" alt="Triple Triad" 
+      <img src={`${import.meta.env.BASE_URL}/assets/card-back.png`} alt="Triple Triad" 
         style={{ width: "100%", maxWidth: "150px" }} />
       <p>Triple Triad is a card game from 
         <a href="https://en.wikipedia.org/wiki/Final_Fantasy_VIII" target="_blank">Final Fantasy VIII</a>. 
@@ -48,7 +48,7 @@ export default function App() {
   return (
     <div className="app">
       <h1>
-        <img src="/assets/card-back.png" alt="Triple Triad" 
+        <img src={`${import.meta.env.BASE_URL}/assets/card-back.png`} alt="Triple Triad" 
         style={{ width: "100%", maxWidth: "50px" }} />
         Triple Triad
       </h1>
