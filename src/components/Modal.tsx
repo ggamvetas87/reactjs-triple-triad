@@ -6,7 +6,7 @@ type ModalProps = {
   title: string;
   content?: React.ReactNode;
   buttonText?: string;
-  onClick?: () => void;
+  onClick?: (param?: string) => void;
   soundEffect?: string;
 }
 
@@ -25,7 +25,7 @@ export default function Modal({ title, content, buttonText, onClick, soundEffect
         {title && <h2>{title}</h2>}
         {content}
 
-        {buttonText && onClick && <button onClick={onClick}>{buttonText}</button>}
+        {buttonText && onClick && <button onClick={() => onClick()}>{buttonText}</button>}
       </div>
     </div>
   );

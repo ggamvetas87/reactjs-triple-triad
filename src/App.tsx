@@ -80,7 +80,7 @@ export default function App() {
           title={winner === "Player 1" ? "🏆 Winner!" : winner === "Player 2" ? "💀 Loser!" : "🤝 Draw!"}
           content={<p>Final Score: {score.p1} - {score.p2}</p>}
           buttonText="Play Again"
-          onClick={restart}
+          onClick={() => restart(gameMode)}
           soundEffect={winner === "Player 1" ? "ff8-victory-fanfare.ogg" : winner === "Player 2" ? "game-over.mp3" : "game-over.mp3"}
         />
       )}
