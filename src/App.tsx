@@ -38,6 +38,7 @@ export default function App() {
       <p>For a list of rules and gameplay, 
         <a href="https://finalfantasy.fandom.com/wiki/Triple_Triad" 
         target="_blank">ℹ️ instructions read here.</a></p>
+      <p>Check project on <a href="https://github.com/ggamvetas87/reactjs-triple-triad" target="_blank">Github</a></p>
       <p>Click the button below to start the game.</p>
       <p><button onClick={!hasStarted ? () => startGame("single") : () => setInfoModalVisible(false)}>{!hasStarted ? "Start Game (1vCPU)" : "Close"}</button></p>
       {!hasStarted && <p><button onClick={() => startGame("multiplayer")}>Start Game (1v1)</button></p>}
