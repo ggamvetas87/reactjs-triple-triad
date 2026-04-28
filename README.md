@@ -143,7 +143,9 @@ http://localhost:5173/
 
 ## 📸 Preview
 
-(Pending screenshots or GIFs)
+![Triple Triad #1](docs/screenshots/triple-triad-scn-1.png)
+![Triple Triad #2](docs/screenshots/triple-triad-scn-2.png)
+![Triple Triad #3](docs/screenshots/triple-triad-scn-3.png)
 
 ---
 
