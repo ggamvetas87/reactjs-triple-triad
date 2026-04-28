@@ -35,14 +35,15 @@ The game features turn-based mechanics, card captures, dynamic scoring and artwo
 |--- /components
      |--- Board.tsx
      |--- Card.tsx
-     |--- Hand.tsx
-     |--- ResultModal.tsx
+     |--- Modal.tsx
+     |--- PlayerCardDeck.tsx
+     |--- Score.tsx
 |--- /hooks
      |--- useGame.ts
 |--- /utils
      |--- gameHelpers.ts
 |--- /data
-     |--- cards.ts
+     |--- allCards.ts
 |--- /types
      |--- game.ts
 |--- /public
