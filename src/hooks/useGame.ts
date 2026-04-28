@@ -80,9 +80,9 @@ export function useGame() {
   const winner = useMemo(() => {
     if (!gameOver) return null;
     if (score.p1 > score.p2) return "Player 1";
-    if (score.p2 > score.p1) return "Player 2";
+    if (score.p2 > score.p1) return gameMode === "single" ? "Computer" : "Player 2";
     return "Draw";
-  }, [gameOver, score]);
+  }, [gameOver, score, gameMode]);
 
   const startBgMusic = () => playSound("bg-music.mp3", {
     volume: 0.35,

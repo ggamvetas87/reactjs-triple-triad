@@ -77,11 +77,11 @@ export default function App() {
       {/* Game Over Modal */}
       {gameOver && (
         <Modal
-          title={winner === "Player 1" ? "🏆 Winner!" : winner === "Player 2" ? "💀 Loser!" : "🤝 Draw!"}
+          title={winner !== "Computer" && winner !== "Draw" ? `🏆 ${winner} Wins!` : winner !== "Draw" ? "💀 Loser!" : "🤝 Draw!"}
           content={<p>Final Score: {score.p1} - {score.p2}</p>}
           buttonText="Play Again"
           onClick={() => restart(gameMode)}
-          soundEffect={winner === "Player 1" ? "ff8-victory-fanfare.ogg" : winner === "Player 2" ? "game-over.mp3" : "game-over.mp3"}
+          soundEffect={winner !== "Computer" && winner !== "Draw" ? "ff8-victory-fanfare.ogg" : "game-over.mp3"}
         />
       )}
 
