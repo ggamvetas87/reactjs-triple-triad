@@ -64,7 +64,7 @@ export function useGame() {
     board.forEach(c => {
       if (!c) return;
       if (c.owner === "p1") p1++;
-      if (c.owner === "p2") p2++;
+      if (c.owner === "p2" || c.owner === "computer") p2++;
     });
 
     return { p1, p2 };
@@ -106,6 +106,10 @@ export function useGame() {
         : computerCards
     );
 
+    if (hasStarted) {
+      stopAllSounds();
+    }
+
     setSelectedCard(null);
     setHasStarted(true);
 
@@ -130,28 +134,35 @@ export function useGame() {
   }, []);
 
   useEffect(() => {
-    if (gameMode !== "single" || turn !== "computer" || gameOver) return;
+  if (gameMode !== "single" || turn !== "computer" || gameOver) return;
+
+    const move = getBestComputerMove(board, opponentDeck);
+    const delayTime = 500 + Math.random() * 800;
+
+    if (!move) return;
+
+    // COM Visually select card
+    setSelectedCard(move.card);
 
     const timer = setTimeout(() => {
-      const move = getBestComputerMove(board, computerCards);
-
-      if (!move) return;
-
       let newBoard = [...board];
       newBoard[move.index] = move.card;
       newBoard = applyCaptures(newBoard, move.index, move.card);
 
       setBoard(newBoard);
+
       setOpponentDeck((prev) =>
         prev.filter((c) => c.id !== move.card.id)
       );
 
       playSound("card-place2.wav");
+
+      setSelectedCard(null);
       setTurn("p1");
-    }, 1500);
+    }, delayTime);
 
     return () => clearTimeout(timer);
-  }, [turn, board, opponentDeck, gameOver, computerCards, gameMode]);
+  }, [turn, gameMode, board, opponentDeck, gameOver]);
 
   return {
     board,

@@ -17,12 +17,12 @@ export default function App() {
     winner,
     hasStarted,
     isMusicPlaying,
+    gameMode,
     selectCard,
     placeCard,
     startGame,
     restart,
-    toggleMusic,
-    setGameMode
+    toggleMusic
   } = useGame();
 
   const [isInfoModalVisible, setInfoModalVisible] = useState(false);
@@ -103,7 +103,7 @@ export default function App() {
       />
 
       <PlayerCardDeck
-        player={turn === "p2" ? "p2" : "computer"}
+        player={gameMode === "multiplayer" ? "p2" : "computer"}
         cards={opponentDeck}
         isActive={turn === "p2" || turn === "computer"}
         onSelect={selectCard}

@@ -174,14 +174,23 @@ export function getBestComputerMove(
     .map((cell, index) => (cell === null ? index : null))
     .filter((index): index is number => index !== null);
 
-  let bestMove: { card: CardType; index: number; score: number } | null = null;
+  let bestScore = -1;
+  let possibleMoves: {
+    card: CardType;
+    index: number;
+    score: number;
+  }[] = [];
 
   for (const card of computerDeck) {
     for (const index of emptyIndexes) {
       const simulatedBoard = [...board];
       simulatedBoard[index] = card;
 
-      const capturedBoard = applyCaptures(simulatedBoard, index, card);
+      const capturedBoard = applyCaptures(
+        simulatedBoard,
+        index,
+        card
+      );
 
       const captures = capturedBoard.filter(
         (c, i) =>
@@ -190,15 +199,16 @@ export function getBestComputerMove(
           board[i]?.owner !== "computer"
       ).length;
 
-      if (!bestMove || captures > bestMove.score) {
-        bestMove = {
-          card,
-          index,
-          score: captures,
-        };
+      if (captures > bestScore) {
+        bestScore = captures;
+        possibleMoves = [{ card, index, score: captures }];
+      } else if (captures === bestScore) {
+        possibleMoves.push({ card, index, score: captures });
       }
     }
   }
 
-  return bestMove;
+  return possibleMoves[
+    Math.floor(Math.random() * possibleMoves.length)
+  ];
 }

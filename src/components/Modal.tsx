@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import type React from "react";
-import { playSound } from "@/utils/gameHelpers";
+import { playSound, stopAllSounds } from "@/utils/gameHelpers";
 
 type ModalProps = {
   title: string;
@@ -14,6 +14,7 @@ export default function Modal({ title, content, buttonText, onClick, soundEffect
   
   useEffect(() => {
     if (soundEffect) {
+      stopAllSounds();
       playSound(soundEffect);
     }
   }, [soundEffect]);
