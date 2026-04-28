@@ -7,10 +7,9 @@ The game features turn-based mechanics, card captures, dynamic scoring and artwo
 
 ## 🎮 Features
 
-- 🔄 Turn-based gameplay (Player 1 vs Player 2)
+- 🔄 Turn-based gameplay (Player 1 vs Player 2 or Player 1 vs COM)
 - 🃏 Unique card system with stats (attack / defense / ownership)
 - 🧠 Capture mechanics inspired by Triple Triad rules
-- 👁️ Battle preview system (see outcomes before placing a card)
 - 🎨 Card artwork support (image-based cards)
 - 📊 Live score calculation
 - 🏁 Game over detection + winner modal
@@ -48,7 +47,7 @@ The game features turn-based mechanics, card captures, dynamic scoring and artwo
      |--- game.ts
 |--- /public
      |--- /cards
-          |--- ifirt.png
+          |--- ifrit.png
 ```
 
 
@@ -80,32 +79,22 @@ Winner is determined by:
 
 ---
 
-## 👁️ Battle Preview System
-
-Before placing a card:
-- Hover a cell
-- System simulates the move
-- Shows:
-  - potential captures
-  - board outcome preview
-  - visual highlights
-
-This helps players make strategic decisions before committing.
-
----
-
 ## 🎨 Card System
 
 Each card includes:
 
 ```ts
 type CardType = {
-  id: string;
+  id: number | string;
   name: string;
-  attack: number;
-  defense: number;
-  owner: "p1" | "p2";
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+  owner?: Player;
   image: string;
+  element?: string | null;
+  level: number;
 };
 ```
 
@@ -134,9 +123,8 @@ http://localhost:5173/
 ---
 
 ## 🔧 Possible Improvements
-- AI opponent (basic or advanced)
+- AI opponent (advanced)
 - Ranked matchmaking system
-- Sound effects (card placement / capture)
 - Drag & drop card placement
 - Deck builder system
 - Online multiplayer (WebSocket / Socket.io)
@@ -159,12 +147,15 @@ http://localhost:5173/
 
 ---
 
-## 🧑‍💻 Author
+## 🧑‍💻 Author / Credits
 
 Built with React as a learning + experimental game project focused on:
 - state management patterns
 - game logic design
 - UI feedback systems
+
+All game concepts and designs are based on work by `Square Enix`, and music is property of `Square Enix`.
+<br>`Game images` and `sounds` used in this project are part of FFVIII mods by <a href="https://github.com/itdelatrisu/" target="_blank">@itdelatrisu</a>
 
 ---
 
