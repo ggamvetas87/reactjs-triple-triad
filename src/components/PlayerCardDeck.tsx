@@ -1,3 +1,4 @@
+import useDetectDevice from "@/hooks/useDetectDevice";
 import type { CardType, Player } from "@/types/game";
 
 type PlayerCardDeckProps = {
@@ -15,14 +16,17 @@ export default function PlayerCardDeck({
   onSelect,
   selectedCard
 }: PlayerCardDeckProps) {
-  const CARD_OFFSET = 100;
-  let positionTop = 0;
+  const device = useDetectDevice();
+  
+  const isMobile = device === "mobile";
+  const CARD_OFFSET = isMobile ? 65 : 100;
+  let value = 0;
 
   return (
     <div className={`hand hand-${player} ${!isActive ? "disabled" : ""}`}>
       {cards.map((card, index) => {
         if (index > 0) {
-          positionTop = index * CARD_OFFSET; // Increment top position for each card after the first (for visual stacking)
+          value = index * CARD_OFFSET; // Increment top / left position for each card after the first (for visual stacking)
         }
 
         return (
@@ -31,7 +35,8 @@ export default function PlayerCardDeck({
             className={`card playerhand ${selectedCard?.id === card.id ? "selected" : ""}`}
             onClick={() => isActive && onSelect(card)}
             style={{
-              top: `${positionTop}px`,
+              top: isMobile ? undefined : `${value}px`,
+              left: isMobile ? `${value}px` : undefined,
               backgroundImage: `url(${card.image})`
             }}
             title={`${card.name} - Level ${card.level}`}
